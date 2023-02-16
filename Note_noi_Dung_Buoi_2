@@ -1,0 +1,36 @@
+Nội dung buổi 2
+
+1/ PRIMARY KEY 
+	- khóa chính
+
+2/ AUTO increment
+	- tự động tăng
+
+VD: id INT PRIMARY KEY AUTO_INCREMENT;
+
+
+3/ 1 bảng dùng nhiều lần
+	* DATEDIFF : hàm tính thời gian giữa 2 mốc tg
+
+4/ chia lấy dư - %
+
+	VD: select 13 % 2 => 1
+		select 14 % 6 => 2 
+
+5/ Concat - nối chuỗi
+	
+	VD: SELECT CONCAT('Nguyễn', 'Ngọc');
+			=> NguyễnNgọc
+
+6/Declare variable 
+
+	SET @tên_biến = value;
+	VD: SET @dayValue = 4;
+		SELECT @dayValue;
+
+7/ IF - điều kiện
+
+VD : SELECT IF (16 % 2 = 1, 'Số Lẻ', 'Số Chẵn');
+
+=> nếu 16 chia cho 2 dư 1 thì nhảy vào điều kiện số lẻ còn ko thì vào điều kiện số chẵn.
+
