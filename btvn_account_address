@@ -1,0 +1,99 @@
+//bai 1:
+
+--a
+CREATE TABLE account (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	address_id INT,
+	username VARCHAR(50),
+	full_name VARCHAR(50),
+	phone VARCHAR(12),
+	email VARCHAR(50),
+	created_date DATE,
+	FOREIGN KEY(address_id) REFERENCES address(id)
+);
+
+CREATE TABLE address(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	address_location VARCHAR(200),
+	created_date DATE
+);
+
+--b
+INSERT INTO account (id,address_id,username,full_name,phone,email,created_date) VALUE
+(1,11,'username1', 'FULL NAME 1', '0972433546','username1@gmail.com','2023-03-17'),
+(2,12,'username2', 'FULL NAME 2', '0972333546','username2@gmail.com','2021-04-27'),
+(3,13,'username3', 'FULL NAME 3', '0974567546','username3@gmail.com','2020-04-1'),
+(4,14,'username4', 'FULL NAME 4', '0923466546','username4@gmail.com','2028-01-2'),
+(5,15,'username5', 'FULL NAME 5', '0971223546','username5@gmail.com','2025-01-4'),
+(6,16,'username6', 'FULL NAME 6', '0978009546','username6@gmail.com','2024-08-1'),
+(7,17,'username7', 'FULL NAME 7', '0912343546','username7@gmail.com','2022-09-2'),
+(8,18,'username8', 'FULL NAME 8', '0972966546','username8@gmail.com','2021-04-8'),
+(9,19,'username9', 'FULL NAME 9', '0971113546','username9@gmail.com','2023-05-11'),
+(10,20,'username10', 'FULL NAME 10', '0979976646','username10@gmail.com','2020-07-12');
+
+
+INSERT INTO address(id,address_location,created_date) VALUE
+(11,'Nam Tu Liem, Ha Noi','2000-10-9'),
+(12,'Bac Tu Liem, Ha Noi','2002-11-18'),
+(13,'Cau Giay, Ha Noi','2001-12-11'),
+(14,'Duong Lang, Ha Noi','2011-4-14'),
+(15,'Ha Dong, Ha Noi','2014-12-12'),
+(16,'Tu Liem, Ha Noi','2000-11-1'),
+(17,'Mai Dich, Ha Noi','2001-5-12'),
+(18,'Ngo Quyen, Ha Noi','2003-6-6'),
+(19,'Ho Tay, Ha Noi','2001-7-9'),
+(20,'Long Bien, Ha Noi','2012-3-2');
+
+--c
+SELECT * FROM address;
+SELECT account.id,account.username,account.full_name,account.phone,account.email,account.created_date,address.address_location FROM account LEFT JOIN address ON account.address_id = address.id;
+
+
+//bai 2:
+
+CREATE TABLE account (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	address_id INT,
+	username VARCHAR(50),
+	full_name VARCHAR(50),
+	phone VARCHAR(12),
+	email VARCHAR(50),
+	created_date DATE,
+	FOREIGN KEY(address_id) REFERENCES address(id)
+);
+
+CREATE TABLE address(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	address_location VARCHAR(200),
+	created_date DATE
+);
+
+--b
+INSERT INTO account (id,address_id,username,full_name,phone,email,created_date) VALUE
+(1,11,'username1', 'FULL NAME 1', '0972433546','username1@gmail.com','2023-03-17'),
+(2,11,'username2', 'FULL NAME 2', '0972333546','username2@gmail.com','2021-04-27'),
+(3,13,'username3', 'FULL NAME 3', '0974567546','username3@gmail.com','2020-04-1'),
+(4,20,'username4', 'FULL NAME 4', '0923466546','username4@gmail.com','2028-01-2'),
+(5,13,'username5', 'FULL NAME 5', '0971223546','username5@gmail.com','2025-01-4'),
+(6,16,'username6', 'FULL NAME 6', '0978009546','username6@gmail.com','2024-08-1'),
+(7,13,'username7', 'FULL NAME 7', '0912343546','username7@gmail.com','2022-09-2'),
+(8,18,'username8', 'FULL NAME 8', '0972966546','username8@gmail.com','2021-04-8'),
+(9,19,'username9', 'FULL NAME 9', '0971113546','username9@gmail.com','2023-05-11'),
+(10,20,'username10', 'FULL NAME 10', '0979976646','username10@gmail.com','2020-07-12');
+
+
+INSERT INTO address(id,address_location,created_date) VALUE
+(11,'Nam Tu Liem, Ha Noi','2000-10-9'),
+(12,'Bac Tu Liem, Ha Noi','2002-11-18'),
+(13,'Cau Giay, Ha Noi','2001-12-11'),
+(14,'Duong Lang, Ha Noi','2011-4-14'),
+(15,'Ha Dong, Ha Noi','2014-12-12'),
+(16,'Tu Liem, Ha Noi','2000-11-1'),
+(17,'Mai Dich, Ha Noi','2001-5-12'),
+(18,'Ngo Quyen, Ha Noi','2003-6-6'),
+(19,'Ho Tay, Ha Noi','2001-7-9'),
+(20,'Long Bien, Ha Noi','2012-3-2');
+
+--c
+SELECT * FROM address;
+SELECT account.id,account.username,account.full_name,account.phone,account.email,account.created_date,address.address_location FROM account LEFT JOIN address ON account.address_id = address.id;
