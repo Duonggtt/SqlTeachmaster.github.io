@@ -1,0 +1,84 @@
+CREATE DATABASE product_management_btvn
+USE product_management_btvn
+
+CREATE TABLE category(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	category_code VARCHAR(30) NOT NULL,
+	category_name VARCHAR(200) NOT NULL,
+	created_date DATE NOT NULL,
+	update_date DATE NOT NULL 
+);
+
+CREATE TABLE supplier(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	supplier_code VARCHAR(30) NOT NULL,
+	supplier_name VARCHAR(200) NOT NULL,
+	image VARCHAR(200),
+	created_date DATE NOT NULL,
+	update_date DATE NOT NULL  
+);
+
+CREATE TABLE product(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	product_name VARCHAR(200) NOT NULL,
+	description VARCHAR(250),
+	from_country VARCHAR(200),
+	is_new VARCHAR(30),
+	created_date DATE NOT NULL,
+	update_date DATE NOT NULL,
+	product_type VARCHAR(30),
+	provider VARCHAR(200)
+);
+
+CREATE TABLE product_detail(
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
+	image VARCHAR(200),
+	standard_cost BIGINT,
+	quantity INT,
+	color VARCHAR(30),
+	created_date DATE NOT NULL,
+	update_date DATE NOT NULL,
+	product_id BIGINT,
+	FOREIGN KEY(product_id) REFERENCES product(id) 
+);
+
+CREATE TABLE customer(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	username VARCHAR(30) NOT NULL,
+	password VARCHAR(30) NOT NULL,
+	first_name VARCHAR(30) NOT NULL,
+	last_name VARCHAR(30) NOT NULL,
+	gender VARCHAR(10),
+	email VARCHAR(200),
+	birthday DATE,
+	avatar VARCHAR(200),
+	address VARCHAR(200),
+	status VARCHAR(10),
+	created_date DATE NOT NULL,
+	update_date DATE NOT NULL 
+);
+
+CREATE TABLE order_table(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	order_code VARCHAR(30) NOT NULL,
+	total_money BIGINT NOT NULL,
+	status VARCHAR(10),
+	created_date DATE NOT NULL,
+	update_date DATE NOT NULL,
+	product_id BIGINT,
+	customer_id INT,
+	FOREIGN KEY(product_id) REFERENCES product(id),
+	FOREIGN KEY(customer_id) REFERENCES customer(id)
+);
+
+CREATE TABLE order_detail(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	product_id BIGINT,
+	product_detail_id BIGINT,
+	quantity INT,
+	total BIGINT NOT NULL,
+	order_id INT,
+	FOREIGN KEY(product_id) REFERENCES product(id),
+	FOREIGN KEY(product_detail_id) REFERENCES product_detail(id),
+	FOREIGN KEY(order_id) REFERENCES order_table(id)
+);

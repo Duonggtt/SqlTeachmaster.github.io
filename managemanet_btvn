@@ -1,0 +1,73 @@
+CREATE DATABASE managemanet_btvn
+USE managemanet_btvn
+
+CREATE TABLE account(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	username VARCHAR(30) NOT NULL,
+	PASSWORD VARCHAR(30) NOT NULL,
+	first_name VARCHAR(30),
+	last_name VARCHAR(30),
+	gender VARCHAR(10),
+	email VARCHAR(50) NOT NULL,
+	birth_day DATE,
+	avatar VARCHAR(200),
+	phone VARCHAR(12),
+	address VARCHAR(200),
+	city VARCHAR(100),
+	country VARCHAR(100),
+	code_active VARCHAR(100) NOT NULL,
+	status VARCHAR(10),
+	created_date DATE NOT NULL,
+	update_date DATE NOT NULL
+);
+
+CREATE TABLE roles(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	role_name VARCHAR(30) NOT NULL,
+	created_date DATE NOT null,
+	update_date DATE NOT NULL
+);
+
+CREATE TABLE account_roles(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	account_id INT,
+	roles_id INT,
+	FOREIGN KEY(account_id) REFERENCES account(id),
+	FOREIGN KEY(roles_id) REFERENCES roles(id)
+);
+
+INSERT INTO account(id,username,PASSWORD,first_name,last_name,gender,email,birth_day,avatar,phone,address,city,country,code_active,status,created_date,update_date) VALUE
+(1,'user1','123','user1','name1','MALE','user1@gmail.com','2000-12-23','avatar1','0972433111','Nam Tu Liem, Ha Noi','Ha Noi','Viet Nam','0911','ENABLE','2000-12-02','2011-11-12'),
+(2,'user2','123','user2','name2','FEMALE','user2@gmail.com','2021-06-21','avatar2','0972422211','Bac Tu Liem, Ha Noi','Ha Noi','Viet Nam','0928','DISABLE','2009-07-03','2012-12-05'),
+(3,'user3','123','user3','name3','NULL','user3@gmail.com','2000-12-12','avatar3','0972431111','Cau Giay, Ha Noi','Ha Noi','Viet Nam','0911','ENABLE','2021-12-15','2001-09-22'),
+(4,'user4','123','user4','name4','MALE','user4@gmail.com','2000-10-15','avatar4','0951233111','Nam Tu Liem, Ha Noi','Ha Noi','Viet Nam','0999','DISABLE','2012-04-21','2015-04-19'),
+(5,'user5','123','user5','name5','MALE','user5@gmail.com','2000-11-23','avatar5','0972412111','Ha Dong, Ha Noi','Ha Noi','Viet Nam','0921','ENABLE','2011-06-05','2021-03-22'),
+(6,'user6','123','user6','name6','FEMALE','user6@gmail.com','2000-04-11','avatar6','0972888211','Ha Dong, Ha Noi','Ha Noi','Viet Nam','0900','NULL','2008-02-15','2022-06-30'),
+(7,'user7','123','user7','name7','FEMALE','user7@gmail.com','2000-01-16','avatar7','0972488811','Cau Giay, Ha Noi','Ha Noi','Viet Nam','0912','ENABLE','2009-01-21','2009-03-09'),
+(8,'user8','123','user8','name8','NULL','user8@gmail.com','2000-09-02','avatar8','0972435551','Cau Giay, Ha Noi','Ha Noi','Viet Nam','0922','DISABLE','2001-07-28','2005-08-01'),
+(9,'user9','123','user9','name9','MALE','user9@gmail.com','2000-02-29','avatar9','0972433666','Nam Tu Liem, Ha Noi','Ha Noi','Viet Nam','0961','NULL','2002-08-22','2006-02-12'),
+(10,'user10','123','user10','name10','FEMALE','user10@gmail.com','2000-12-12','avatar10','0972123451','Tay Ho, Ha Noi','Ha Noi','Viet Nam','0955','ENABLE','2003-12-06','2012-05-15');
+
+INSERT INTO roles(id,role_name,created_date,update_date) VALUE
+(11,'something11','2000-12-23','2001-12-23'),
+(12,'something12','2003-06-23','2001-06-23'),
+(13,'something13','2011-12-22','2001-02-12'),
+(14,'something14','2021-05-21','2001-12-22'),
+(15,'something15','2016-04-17','2001-09-11'),
+(16,'something16','2009-04-19','2001-10-25'),
+(17,'something17','2006-01-05','2001-11-18'),
+(18,'something18','2001-02-03','2001-02-11'),
+(19,'something19','2011-09-01','2001-12-03'),
+(20,'something20','2012-12-09','2001-09-15');
+
+INSERT INTO account_roles(id,account_id,roles_id) VALUE
+(1,1,11),
+(2,1,16),
+(3,2,16),
+(4,2,20),
+(5,5,15),
+(6,1,12),
+(7,9,11),
+(8,9,14),
+(9,3,12),
+(10,7,14);
