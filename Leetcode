@@ -56,7 +56,7 @@ update salary set sex = if(sex ='f','m','f');
 select actor_id,director_id from actordirector group by 
 actor_id,director_id having count(actor_id) >= 3 ;
 
---1084
+--1148
 
-
+select distinct author_id as id from views where author_id = viewer_id order by author_id;
 
