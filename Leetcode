@@ -1,0 +1,62 @@
+--175
+
+SELECT firstName, lastName, city,state FROM Person left JOIN Address ON Person.personId = Address.personId;
+
+--181
+
+SELECT name as Employee FROM Employee e WHERE salary > (select salary from Employee where id = e.managerId)
+
+--182
+
+select email as Email FROM Person GROUP BY email HAVING COUNT(email) > 1
+
+--183
+
+SELECT name as Customers FROM Customers LEFT JOIN Orders ON Customers.id = Orders.customerId where customerId is NULL
+
+--196
+
+DELETE p1 from Person p1 JOIN Person p2 on  p1.email = p2.email where p1.id > p2.id
+
+--197
+
+select w1.id as Id from Weather w1, Weather w2 where w1.temperature > w2.temperature and  DATEDIFF(w1.recordDate,w2.recordDate) = 1
+
+--511
+
+select player_id, min(event_date) as first_login from Activity group by player_id
+
+--586
+
+select customer_number from orders group by customer_number order by count(customer_number) desc limit 1;
+
+
+--595
+
+select name,population,area from World where area >= 3000000 or population >= 25000000;
+
+--596
+
+select class from Courses group by class having count(class) >= 5;
+
+--607
+
+select SalesPerson.name from SalesPerson where sales_id not in (select sales_id from company join orders on orders.com_id = company.com_id and company.name = 'RED');
+
+--620
+
+select * from cinema where id % 2 != 0 and description not like 'boring' order by rating desc; 
+
+--627
+
+update salary set sex = if(sex ='f','m','f');
+
+--1050
+
+select actor_id,director_id from actordirector group by 
+actor_id,director_id having count(actor_id) >= 3 ;
+
+--1084
+
+
+
