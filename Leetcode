@@ -60,3 +60,7 @@ actor_id,director_id having count(actor_id) >= 3 ;
 
 select distinct author_id as id from views where author_id = viewer_id order by author_id;
 
+--1407
+
+select users.name, ifnull(sum(rides.distance), 0) as travelled_distance from users left join rides on rides.user_id = users.id group by rides.user_id order by travelled_distance desc, users.name;
+
