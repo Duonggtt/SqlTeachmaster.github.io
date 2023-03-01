@@ -1,0 +1,285 @@
+CREATE DATABASE role_permission_management
+USE role_permission_management
+
+DROP TABLE IF EXISTS user;
+CREATE TABLE user (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	username VARCHAR(100) NOT NULL,
+	password VARCHAR(100) NOT NULL,
+	first_name VARCHAR(100),
+	last_name VARCHAR(100),
+	gender ENUM('MALE', 'FEMALE'),
+	email VARCHAR(100) NOT NULL,
+	birth_day DATE,
+	avartar VARCHAR(100),
+	phone VARCHAR(15),
+	address VARCHAR(100),
+	city VARCHAR(100),
+	country VARCHAR(100),
+	code_active VARCHAR(10) NOT NULL,
+	status ENUM('ENABLE', 'DISABLE') NOT NULL,
+	created_at DATE NOT NULL,
+	updated_at DATE NOT NULL
+);
+
+DROP TABLE if EXISTS role;
+CREATE TABLE role (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	role_name VARCHAR(100) NOT NULL,
+	created_at DATE NOT NULL,
+	updated_at DATE NOT NULL
+);
+
+DROP TABLE if EXISTS permission;
+CREATE TABLE permission (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	permission_name VARCHAR(100) NOT NULL,
+	created_at DATE NOT NULL,
+	updated_at DATE NOT NULL
+);
+
+DROP TABLE IF EXISTS role_permission;
+CREATE TABLE role_permission (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	role_id INT NOT NULL,
+	permission_id INT NOT NULL,
+	FOREIGN KEY (role_id) REFERENCES role(id),
+	FOREIGN KEY (permission_id) REFERENCES permission(id)
+);
+
+CREATE TABLE if NOT EXISTS category (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	category_code VARCHAR(255) NOT NULL,
+	category_name VARCHAR(255) NOT NULL,
+	created_date DATE NOT NULL,
+	updated_date DATE NOT NULL
+);
+
+CREATE TABLE if NOT EXISTS supplier (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	supplier_code VARCHAR(255) NOT NULL,
+	image VARCHAR(255),
+	supplier_name VARCHAR(255) NOT NULL,
+	created_date DATE NOT NULL,
+	updated_date DATE NOT NULL
+);
+
+CREATE TABLE if NOT EXISTS product (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	product_name VARCHAR(255) NOT NULL,
+	product_code VARCHAR(255) NOT NULL,
+	description VARCHAR(255),
+	from_country VARCHAR(255) NOT NULL,
+	is_new ENUM('NEW', 'NOT_NEW'),
+	category_id INT,
+	supplier_id INT,
+	created_date DATE NOT NULL,
+	updated_date DATE NOT NULL,
+	FOREIGN KEY (category_id) REFERENCES category(id),
+	FOREIGN KEY (supplier_id) REFERENCES supplier(id)
+);
+
+CREATE TABLE if NOT EXISTS product_detail (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	size VARCHAR(20) NOT NULL,
+	image VARCHAR(255) NOT NULL,
+	color VARCHAR(255) NOT NULL,
+	quantity INT,
+	product_id INT,
+	created_date DATE NOT NULL,
+	updated_date DATE NOT NULL,
+	FOREIGN KEY (product_id) REFERENCES product(id)
+);
+
+CREATE TABLE if NOT EXISTS customer (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	username VARCHAR(255) NOT NULL,
+	password VARCHAR(255) NOT NULL,
+	first_name VARCHAR(255) NOT NULL,
+	last_name VARCHAR(255) NOT NULL,
+	gender ENUM('MALE','FEMALE'),
+	email VARCHAR(255),
+	birthday DATETIME ,
+	avartar VARCHAR(255),
+	address VARCHAR(255),
+	customer_status ENUM('ACTIVE', 'DEACTIVE') DEFAULT 'ACTIVE',
+	created_date DATE NOT NULL,
+	updated_date DATE NOT NULL
+);
+
+CREATE TABLE if NOT EXISTS orders (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	order_code VARCHAR(255) ,
+	total_money FLOAT NOT NULL,
+	orders_status ENUM('PENDING', 'APPROVED', 'SHIPPING', 'RECEIVED'),
+	customer_id INT,
+	created_date DATE NOT NULL,
+	updated_date DATE ,
+	FOREIGN KEY (customer_id) REFERENCES customer(id)
+);
+
+CREATE TABLE if NOT EXISTS order_detail (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	quantity INT UNSIGNED not NULL,
+	total_money FLOAT NOT NULL,
+	product_detail_id INT,
+	order_id INT,
+	created_date DATE NOT NULL,
+	updated_date DATE ,
+	FOREIGN KEY (product_detail_id) REFERENCES product_detail(id),
+	FOREIGN KEY (order_id) REFERENCES orders(id)
+);
+
+INSERT INTO order_detail(id,quantity,total_money,product_detail_id,order_id,created_date,updated_date) VALUE
+(1,10,800,1,4,NOW(),NOW()),
+(2,10,500,2,1,NOW(),NOW()),
+(3,10,700,4,2,NOW(),NOW()),
+(4,10,800,4,4,NOW(),NOW()),
+(5,10,900,5,5,NOW(),NOW()),
+(6,10,100,5,6,NOW(),NOW()),
+(7,10,200,3,2,NOW(),NOW());
+
+INSERT INTO user(id,username,PASSWORD,first_name,last_name,gender,email,birth_day,avartar,phone,address,city,country,code_active,STATUS,created_at,updated_at) VALUE
+(1,'username1','123','user1','last name','MALE','user1@gmail.com','2000-10-04','avatar/img','0926443812','Nam Tu Liem', 'Ha Noi', 'Viet Nam','123123','ENABLE',NOW(),NOW()),
+(2,'username2','123','user2','last name','MALE','user2@gmail.com','2001-10-01','avatar/img','0926443812','Bac Tu Liem', 'Ha Noi', 'Viet Nam','124323','DISABLE',NOW(),NOW()),
+(3,'username3','123','user3','last name','FEMALE','user3@gmail.com','2022-10-22','avatar/img','0926443812','Cau Giay', 'Ha Noi', 'Viet Nam','1211123','ENABLE',NOW(),NOW()),
+(4,'username4','123','user4','last name','FEMALE','user4@gmail.com','2011-10-16','avatar/img','0926443812','Nam Tu Liem', 'Ha Noi', 'Viet Nam','122223','DISABLE',NOW(),NOW()),
+(5,'username5','123','user5','last name','MALE','user5@gmail.com','2004-10-04','avatar/img','0926443812','Cau Giay', 'Ha Noi', 'Viet Nam','123144','ENABLE',NOW(),NOW()),
+(6,'username6','123','user6','last name','FEMALE','user6@gmail.com','2006-10-06','avatar/img','0926443812','Cau Giay', 'Ha Noi', 'Viet Nam','123153','DISABLE',NOW(),NOW()),
+(7,'username7','123','user7','last name','MALE','user7@gmail.com','2003-10-12','avatar/img','0926443812','Bac Tu Liem', 'Ha Noi', 'Viet Nam','123333','ENABLE',NOW(),NOW());
+
+INSERT INTO role(id,role_name,created_at,updated_at) VALUE
+(1,'role1',NOW(),NOW()),
+(2,'role2',NOW(),NOW()),
+(3,'role3',NOW(),NOW()),
+(4,'role4',NOW(),NOW()),
+(5,'role5',NOW(),NOW()),
+(6,'role6',NOW(),NOW()),
+(7,'role7',NOW(),NOW());
+
+INSERT INTO permission(id,permission_name,created_at,updated_at) VALUE 
+(1,'permiss1',NOW(),NOW()),
+(2,'permiss2',NOW(),NOW()),
+(3,'permiss3',NOW(),NOW()),
+(4,'permiss4',NOW(),NOW()),
+(5,'permiss5',NOW(),NOW()),
+(6,'permiss6',NOW(),NOW()),
+(7,'permiss7',NOW(),NOW());
+
+
+INSERT INTO role_permission(id,role_id,permission_id) VALUE
+(1,2,4),
+(2,2,5),
+(3,1,3),
+(4,2,4),
+(5,1,2),
+(6,5,1),
+(7,6,2);
+
+INSERT INTO category
+(id, category_code, category_name, created_date, updated_date)
+VALUES
+(1, '49884-235', 'Amblyrhynchus cristatus', NOW(), NOW()),
+(2, '65649-432', 'Antidorcas marsupialis', NOW(), NOW()),
+(3, '68647-206', 'Ara ararauna', NOW(), NOW()),
+(4, '68647-206', 'Amblyrhynchus cristatus', NOW(), NOW()),
+(5, '68647-206', 'Ara ararauna', NOW(), NOW()),
+(6, '65649-432', 'Antidorcas marsupialis', NOW(), NOW()),
+(7, '49884-235', 'Ara ararauna', NOW(), NOW());
+
+INSERT INTO supplier
+(id, supplier_code, supplier_name, image, created_date, updated_date)
+VALUES
+(1, '49288-0870', 'Corvus brachyhos', 'data:image/png;base64,iVBORw0KGg', NOW(), NOW()),
+(2, '62309-104', 'Gymnorhina tibicen', 'data:image/png;base64,iVBORw0KG', NOW(), NOW()),
+(3, '63323-258', 'Ursus americanus', 'data:image/png;base64,iVBORw0KGgo', NOW(), NOW()),
+(4, '64809-108', 'Gymnorhina tibicen', 'data:image/png;base64,iVBORw0KGgo', NOW(), NOW()),
+(5, '63323-258', 'Ursus americanus', 'data:image/png;base64,iVBORw0KGgo', NOW(), NOW()),
+(6, '49288-0870', 'Ursus americanus', 'data:image/png;base64,iVBORw0KGgo', NOW(), NOW()),
+(7, '61233-258', 'Corvus brachyhos', 'data:image/png;base64,iVBORw0KGgo', NOW(), NOW());
+
+INSERT INTO product
+(id, product_code, product_name,from_country, created_date, updated_date, category_id,
+supplier_id )
+VALUES
+(1, 'Stork, greater', 'kẹo','Trung Quoc', '2006-10-10', NOW(), 1, 1),
+(2, 'White-faced', 'bánh','Trung Quoc', '2006-10-10', NOW(), 2, 2),
+(3, 'White-faced', 'bánh','Trung Quoc', '2006-10-10', NOW(), 3, 3),
+(4, 'Admiral, indian', 'bút', 'Singapore', '2006-10-10', NOW(), 3, 3),
+(5, 'Admiral, indian', 'bút', 'Singapore', '2006-10-10', NOW(), 4, 4), 
+(6, 'Stork, greater', 'kẹo', 'Trung Quoc', '2006-10-10', NOW(), 5, 5),
+(7, 'Admiral, indian', 'bút','viet nam', '2006-10-10', NOW(), 6, 6);
+
+INSERT INTO product_detail
+(id, size, image, color,quantity,created_date,updated_date,product_id)
+VALUES
+(1, 'M', 'D:/image', 'blue', 700, NOW(), NOW(),1),
+(2, 'L', 'D:/image', 'green', 700, NOW(), NOW(),2),
+(3, 'XL', 'D:/image', 'red', 700, NOW(), NOW(),3),
+(4, 'S', 'D:/image', 'yellow', 700, NOW(), NOW(),4),
+(5, 'S', 'D:/image', 'yellow', 700, NOW(), NOW(),5),
+(6, 'S', 'D:/image', 'yellow', 700, NOW(), NOW(),6),
+(7, 'XLL', 'D:/image', 'white', 700, NOW(), NOW(),7);
+
+INSERT INTO customer
+(id, username, password, first_name, last_name,birthday, created_date, updated_date)
+VALUES
+(1, 'tien1', 'fdfdf39', 'OPANA', 'Ronstring','2000-12-10', NOW(), NOW()),
+(2, 'tien2', 'fdf34127', 'Night ', 'Home Ing','2012-12-10', NOW(), NOW()),
+(3, 'tien3', 'dsafsf5', 'Vida Mia ', 'Pannier','1070-12-10', NOW(), NOW()),
+(4, 'tien4', 'grggr5', 'Vida Mia ', 'Pannier','2004-12-10', NOW(), NOW()),
+(5, 'tien5', 'gr22r5', 'Visa Mqq ', 'Pannier','2001-12-10', NOW(), NOW()),
+(6, 'tien6', 'grhhr5', 'Voke Mai ', 'Pannier','2012-12-10', NOW(), NOW()),
+(7, 'tien7', 'fvfvfv5', 'Vida Mia ', 'Pannier','2022-12-10', NOW(), NOW());
+
+INSERT INTO orders
+(id, total_money, created_date, customer_id)
+VALUES
+(1, 88743, '2006-10-10', 1),
+(2, 9106, '2007-10-10', 1),
+(3, 2984, '2007-11-12', 2),
+(4, 2984, '2006-10-10', 3),
+(5, 2984, '2006-10-21', 3),
+(6, 2984, '2005-05-10', 4),
+(7, 2984, '2010-11-11', 5);
+
+INSERT INTO order_detail
+(id, order_id, product_detail_id, quantity, total_money)
+VALUES
+(1, 1, 1, 10, 700),
+(2, 1, 2, 10, 700),
+(3, 1, 3, 10, 700),
+(4, 2, 5, 10, 700),
+(5, 4, 4, 10, 700),
+(6, 2, 6, 10, 700),
+(7, 3, 3, 10, 700);
+
+SELECT COUNT(order_detail.product_detail_id) AS quantity FROM order_detail JOIN product_detail ON product_detail.id = order_detail.product_detail_id JOIN product ON product.id = product_detail.product_id WHERE product.from_country = 'Singapore';
+
+SELECT product.* FROM product JOIN product_detail ON product_detail.product_id = product.id AND product_detail.size='M' AND product_detail.color = 'Blue';
+
+SELECT product.* FROM product JOIN supplier ON supplier.id = product.supplier_id AND supplier.supplier_code = '63323-258';
+
+SELECT IFNULL(sum(order_detail.quantity),0) AS quantity FROM orders JOIN order_detail ON order_detail.order_id = orders.id AND orders.created_date LIKE '%2022%';
+
+SELECT IFNULL(sum(order_detail.quantity),0) AS quantity_cake FROM orders 
+JOIN order_detail ON order_detail.order_id = orders.id JOIN product_detail ON product_detail.id = order_detail.product_detail_id 
+JOIN product ON product_detail.product_id = product.id AND orders.created_date LIKE '%2023%' AND product.product_name = 'bánh';
+
+SELECT * FROM customer WHERE first_name LIKE '%n%' OR last_name LIKE '%n%';
+
+SELECT COUNT(id) AS cus_quantity FROM customer WHERE customer_status = 'DEACTIVE';
+
+UPDATE product SET product_name = 'Pen' WHERE product_name = 'bút';
+
+SELECT * FROM product WHERE is_new ='NOT_NEW';
+
+SELECT * FROM  product WHERE product_name IS NULL;
+
+SELECT * FROM customer WHERE YEAR(birthday) > 1990;
+
+SELECT * FROM orders WHERE total_money >= 50000;
+
+SELECT * FROM customer WHERE YEAR(birthday) > 1990 AND address = 'Viet Nam';
+
+SELECT AVG(total_money) FROM orders;
